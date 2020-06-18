@@ -1,0 +1,84 @@
+/* wrapper and field */
+.spellcheckr-wrapper { position: relative; }
+.spellcheckr-wrapper textarea { position: relative; z-index: 1; caret-color: #222; resize: none; padding: 0 !important; }
+.spellcheckr-wrapper textarea::-webkit-input-placeholder {color: #222; }
+.spellcheckr-wrapper textarea::-moz-placeholder {color: #222; } /* Firefox 19+ */
+.spellcheckr-wrapper textarea:-moz-placeholder {color: #222; } /* Firefox 18- */
+.spellcheckr-wrapper textarea:-ms-input-placeholder { color: #222; }
+
+/* tools */
+.spellcheckr-tools { margin-top: .65em; position: relative; display: inline-block; }
+.spellcheckr-wrapper:not([data-ui-mode]) .spellcheckr-tools { display: none; }
+.spellcheckr-wrapper.active .spellcheckr-tools { border: solid 1px #d5d5d5; background: #f4f4f4; padding: 1em; }
+.spellcheckr-tools * { font-size: .93em; line-height: 1em; }
+.spellcheckr-tools a { background: #d3d3d3; color: #333; padding: .5em .65em; font-weight: normal; font-family: lato; border: none; cursor: pointer; text-decoration: none; }
+.spellcheckr-tools a:hover { background: #ddd; }
+.spellcheckr-tools select, .spellcheckr-tools input { padding: .35em .65em; }
+
+/* hidden bits until container active */
+.spellcheckr-wrapper:not(.active) .lang ~ *:not(.flag),
+.spellcheckr-wrapper:not(.active) .row1b,
+.spellcheckr-wrapper:not(.active) .row2,
+.spellcheckr-wrapper:not(.active) .dialog-tools-column,
+.spellcheckr-tools input[type=text] {
+	display: none;
+}
+
+/* context menu (for contextual mode) */
+.spellcheckr-cm { width: 200px; background: #f2f2f2; border: solid 1px #ccc; font-size: .9em; box-shadow: 1.5px 1.5px 2px #8e8e8e; display: none; position: absolute; z-index: 10000; }
+.spellcheckr-cm * { cursor: default; }
+.spellcheckr-cm, .spellcheckr-cm ul { list-style: none; padding: 0; margin: 0; }
+.spellcheckr-cm li { padding: .5em 1em; }
+.spellcheckr-cm li:not(:last-child) { border-bottom: solid 1px #d7d7d7; }
+.spellcheckr-cm .indent { padding-left: 1.8em; }
+.spellcheckr-cm .indent::before { content: '- '; }
+.spellcheckr-cm li:not(.no-click):hover { background: #c3def4; }
+
+/* more tools styles - paragraph rows... */
+.spellcheckr-tools p { margin: 0; }
+.spellcheckr-tools .row1 { margin-bottom: 1em; }
+.spellcheckr-tools .row2 { margin-top: 1em; }
+
+/* ...row 1 (and row1b, for dialog only) */
+.spellcheckr-wrapper .row1b { background: white; border: solid 1px #dfdfdf; padding: 1em; }
+.spellcheckr-tools .do { margin-right: 1em; }
+.spellcheckr-wrapper.active .do { display: none; }
+.spellcheckr-tools .lang { margin-right: 1em; }
+.spellcheckr-tools .row1 a:not(.do) { float: right; }
+.spellcheckr-tools .row1 span { margin-right: 1em; }
+.spellcheckr-tools .close { background: #DA4949; margin-left: 1em; color: #fff; font-weight: bold; }
+.spellcheckr-tools .close:hover { background: #eA5959; }
+
+/* ...row 2 */
+.spellcheckr-tools .row2 > *:not(:last-child) { margin-right: 1em; }
+.spellcheckr-tools select, .spellcheckr-tools input { border: solid 1px #ccc; }
+.spellcheckr-tools input { width: 150px; }
+.spellcheckr-wrapper[data-ui-dialog] .spellcheckr-tools input { width: 150px; position: relative; top: -4px; }
+
+/* ...dialog tools column - dialog mode only. Actually appears not as a row but as a rightward column of buttons */
+.spellcheckr-tools .dialog-tools-column { float: right; margin-top: -198px; }
+.spellcheckr-tools .dialog-tools-column > * { display: block; }
+.spellcheckr-tools .dialog-tools-column > *:not(:first-child) { margin-top: .5em; }
+.spellcheckr-wrapper[data-ui-dialog] .suggestions { height: 200px; }
+
+/* close */
+.spellcheckr-tools > a { position: absolute; right: .65em; top: .65em; color: #E43137; }
+
+/* field overlay during spellcheck */
+.spellcheckr-overlay { position: absolute; left: 0; top: 0; z-index: 0; overflow: auto; }
+.spellcheckr-overlay * { font-family: inherit; }
+
+/* problematic words (all modes) */
+.spellcheckr-wrapper .problem { position: relative; display: inline-block; z-index: 1; }
+
+/* contextual mode - underlined bad words */
+.spellcheckr-wrapper[data-contextual-mode] .spellcheckr-overlay .problem::before { border-bottom: solid 2px #DA4949; }
+
+/* button mode - highlighted bad words during feedback */
+.spellcheckr-overlay .problem::before, .spellcheckr-wrapper .row1b span::before { content: ''; display: block; position: absolute; left: -3px; top: -1px; width: calc(100% + 6px); height: calc(100% + 3px); opacity: .4; z-index: -1; box-sizing: border-box; }
+.spellcheckr-wrapper[data-ui-mode].active .spellcheckr-overlay .problem.curr-bad-word::before, .spellcheckr-wrapper .row1b span::before { background: #DA4949; }
+
+/* dialog mode (i.e. when @ui_display == 'dialog') */
+.spellcheckr-wrapper .spellcheckr-lb { position: fixed; width: 100%; height: 100%; z-index: 10000; opacity: .4; background: black; left: 0; top: 0; }
+.spellcheckr-wrapper:not(.active) .spellcheckr-lb { display: none; }
+.spellcheckr-wrapper[data-ui-dialog].active .spellcheckr-tools { width: 510px; position: fixed; left: calc(50% - (510px / 2)); top: 20%; z-index: 10001; box-shadow: 0 0 12px #444; }
