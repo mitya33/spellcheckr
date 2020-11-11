@@ -1,6 +1,6 @@
 # Spellcheckr
 
-[Documentation and demo](https://mitya.uk/projects/spellcheckr)
+[Documentation and demo here](https://mitya.uk/projects/spellcheckr)
 
 Spellcheckr is a JavaScript-based spellchecker that integrates into textarea tag. It provides a full spellchecker experience, and runs in one of two modes (or both):
 
